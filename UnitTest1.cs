@@ -19,14 +19,14 @@ namespace TestProject1
             float length1 = 3.0f;
             float length2 = 4.0f;
             float length3 = 5.0f;
-            string triangleType = "разносторонний";
+            string triangleType = "Г°Г Г§Г­Г®Г±ГІГ®Г°Г®Г­Г­ГЁГ©";
             string errorMessage = "";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
-                // Clear existing data
+              
                 string clearQuery = "DELETE FROM Triangle";
                 using (SqlCommand clearCommand = new SqlCommand(clearQuery, connection))
                 {
@@ -34,7 +34,7 @@ namespace TestProject1
                 }
             }
 
-            // Create an instance of DatabaseManager
+     
             DatabaseManager dbManager = new DatabaseManager(connectionString);
 
             // Act
@@ -96,7 +96,7 @@ namespace TestProject1
             string triangleType = TriangleUtility.GetTriangleType(sideA, sideB, sideC);
 
             // Assert
-            Assert.AreEqual("равносторонний", triangleType);
+            Assert.AreEqual("Г°Г ГўГ­Г®Г±ГІГ®Г°Г®Г­Г­ГЁГ©", triangleType);
         }
 
         [Test]
@@ -111,7 +111,7 @@ namespace TestProject1
             string triangleType = TriangleUtility.GetTriangleType(sideA, sideB, sideC);
 
             // Assert
-            Assert.AreEqual("равнобедренный", triangleType);
+            Assert.AreEqual("Г°Г ГўГ­Г®ГЎГҐГ¤Г°ГҐГ­Г­Г»Г©", triangleType);
         }
 
         [Test]
@@ -127,7 +127,7 @@ namespace TestProject1
             string triangleType = TriangleUtility.GetTriangleType(sideA, sideB, sideC);
 
             // Assert
-            Assert.AreEqual("разносторонний", triangleType);
+            Assert.AreEqual("Г°Г Г§Г­Г®Г±ГІГ®Г°Г®Г­Г­ГЁГ©", triangleType);
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace TestProject1
             string triangleType = TriangleUtility.GetTriangleType(sideA, sideB, sideC);
 
             // Assert
-            Assert.AreEqual("не треугольник", triangleType);
+            Assert.AreEqual("Г­ГҐ ГІГ°ГҐГіГЈГ®Г«ГјГ­ГЁГЄ", triangleType);
         }
         [Test]
         public void GetData_Should_Retrieve_Data_From_Database()
@@ -152,23 +152,21 @@ namespace TestProject1
             {
                 connection.Open();
 
-                // Clear existing data
+       
                 string clearQuery = "DELETE FROM Triangle";
                 using (SqlCommand clearCommand = new SqlCommand(clearQuery, connection))
                 {
                     clearCommand.ExecuteNonQuery();
                 }
 
-                // Insert test data
                 string insertQuery = "INSERT INTO Triangle (Length_1, Length_2, Length_3, Type_triangle, ErrorMessage) " +
-                    "VALUES (3.0, 4.0, 5.0, 'разносторонний', '')";
+                    "VALUES (3.0, 4.0, 5.0, 'Г°Г Г§Г­Г®Г±ГІГ®Г°Г®Г­Г­ГЁГ©', '')";
                 using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
                 {
                     insertCommand.ExecuteNonQuery();
                 }
             }
 
-            // Create an instance of DatabaseManager
             DatabaseManager dbManager = new DatabaseManager(connectionString);
 
             // Act
@@ -179,7 +177,7 @@ namespace TestProject1
             Assert.AreEqual(3.0f, dataTable.Rows[0]["Length_1"]);
             Assert.AreEqual(4.0f, dataTable.Rows[0]["Length_2"]);
             Assert.AreEqual(5.0f, dataTable.Rows[0]["Length_3"]);
-            Assert.AreEqual("разносторонний", dataTable.Rows[0]["Type_triangle"]);
+            Assert.AreEqual("Г°Г Г§Г­Г®Г±ГІГ®Г°Г®Г­Г­ГЁГ©", dataTable.Rows[0]["Type_triangle"]);
             Assert.AreEqual("", dataTable.Rows[0]["ErrorMessage"]);
         }
 
@@ -191,27 +189,27 @@ namespace TestProject1
             {
                 connection.Open();
 
-                // Clear existing data
+       
                 string clearQuery = "DELETE FROM Triangle";
                 using (SqlCommand clearCommand = new SqlCommand(clearQuery, connection))
                 {
                     clearCommand.ExecuteNonQuery();
                 }
 
-                // Insert test data
+     
                 string insertQuery = "INSERT INTO Triangle (Length_1, Length_2, Length_3, Type_triangle, ErrorMessage) " +
-                    "VALUES (3.0, 4.0, 5.0, 'разносторонний', '')";
+                    "VALUES (3.0, 4.0, 5.0, 'Г°Г Г§Г­Г®Г±ГІГ®Г°Г®Г­Г­ГЁГ©', '')";
                 using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
                 {
                     insertCommand.ExecuteNonQuery();
                 }
             }
 
-            // Create an instance of DatabaseManager
+  
             DatabaseManager dbManager = new DatabaseManager(connectionString);
 
             // Act
-            bool success = dbManager.DeleteData("3.0", "4.0", "5.0", "разносторонний", "");
+            bool success = dbManager.DeleteData("3.0", "4.0", "5.0", "Г°Г Г§Г­Г®Г±ГІГ®Г°Г®Г­Г­ГЁГ©", "");
 
             // Assert
             Assert.IsTrue(success);
@@ -235,7 +233,7 @@ namespace TestProject1
             string length1 = "abc"; // Invalid input
             string length2 = "2.0";
             string length3 = "3.0";
-            string triangleType = "разносторонний";
+            string triangleType = "Г°Г Г§Г­Г®Г±ГІГ®Г°Г®Г­Г­ГЁГ©";
             string errorMessage = "";
 
             Mock<IUserInterface> userInterfaceMock = new Mock<IUserInterface>();
@@ -245,7 +243,7 @@ namespace TestProject1
             dbManager.GetUserInput(length1, length2, length3, triangleType, errorMessage, userInterfaceMock.Object);
 
             // Assert
-            userInterfaceMock.Verify(mock => mock.DisplayMessage("Неверный формат данных."), Times.Once);
+            userInterfaceMock.Verify(mock => mock.DisplayMessage("ГЌГҐГўГҐГ°Г­Г»Г© ГґГ®Г°Г¬Г ГІ Г¤Г Г­Г­Г»Гµ."), Times.Once);
         }
 
         [Test]
@@ -255,7 +253,7 @@ namespace TestProject1
             float length1 = 3.0f;
             float length2 = 4.0f;
             float length3 = 5.0f;
-            string triangleType = "разносторонний";
+            string triangleType = "Г°Г Г§Г­Г®Г±ГІГ®Г°Г®Г­Г­ГЁГ©";
             string errorMessage = "";
 
             Mock<IUserInterface> userInterfaceMock = new Mock<IUserInterface>();
@@ -266,7 +264,7 @@ namespace TestProject1
             dbManager.GetUserInput(length1.ToString(), length2.ToString(), length3.ToString(), triangleType, errorMessage, userInterfaceMock.Object);
 
             // Assert
-            userInterfaceMock.Verify(mock => mock.DisplayMessage("Данные успешно добавлены и переданы стороннему процессу."), Times.Once);
+            userInterfaceMock.Verify(mock => mock.DisplayMessage("Г„Г Г­Г­Г»ГҐ ГіГ±ГЇГҐГёГ­Г® Г¤Г®ГЎГ ГўГ«ГҐГ­Г» ГЁ ГЇГҐГ°ГҐГ¤Г Г­Г» Г±ГІГ®Г°Г®Г­Г­ГҐГ¬Гі ГЇГ°Г®Г¶ГҐГ±Г±Гі."), Times.Once);
             externalDependencyMock.Verify(mock => mock.SimulateDataTransfer(length1, length2, length3), Times.Once);
         }
     }
